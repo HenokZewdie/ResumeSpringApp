@@ -21,6 +21,8 @@ public class HomeController {
     private PersonRepository personRepository;
     @Autowired
     private ExperienceRepository experienceRepository;
+    @Autowired
+    private SkillRepository skillRepository;
 
 
     /*Home Controller*/
@@ -76,6 +78,19 @@ public class HomeController {
         experience.setEmail(emailSession);
         experienceRepository.save(experience);
         model.addAttribute("experience", new Experience());
-        return "education";
+        return "experience";
+    }
+    /*Skill controller*/
+    @RequestMapping(value = "/skill", method = RequestMethod.GET)
+    public String SkillGet(Model model){
+        model.addAttribute("skill", new Skill());
+        return "skill";
+    }
+    @RequestMapping(value = "/skill", method = RequestMethod.POST)
+    public String SkillPost(@ModelAttribute Skill skill, Model model){
+        skill.setEmail(emailSession);
+        skillRepository.save(skill);
+        model.addAttribute("skill", new Experience());
+        return "skill";
     }
 }
