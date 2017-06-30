@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface EducationRepository extends CrudRepository<Education, Long> {
     List<Education> findByEmail(String email);
+
 }

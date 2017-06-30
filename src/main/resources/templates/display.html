@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="www.thymeleaf.org">
 <head th:replace="base :: Mena">
     <meta charset="UTF-8" />
     <title>Title</title>
@@ -20,12 +20,12 @@
 
         </tr>
 
-        <div th:each="test : ${newVal}">
+        <div th:each="loopin : ${searchValue}">
             <tr>
-                <td th:text = "${test.firstName}"></td>
-                <td th:text = "${test.lastName}"></td>
-                <td th:text = "${test.email}"></td>
-                <td th:text = "${#dates.format(test.date, 'MMM-dd-yyyy')}"></td>
+                <td><p th:text = "${loopin.firstName}"></p></td>
+                <td th:text = "${loopin.lastName}"></td>
+                <td th:text = "${loopin.email}"></td>
+                <td th:text = "${#dates.format(loopin.date, 'MMM-dd-yyyy')}"></td>
 
                 <!--<td th:text = "${#dates.format(mylink.date, 'MMM-dd-yyyy')}"></td>  #dates.format(sprint.releaseDate, 'dd-MMM-yyyy')-->
             </tr>

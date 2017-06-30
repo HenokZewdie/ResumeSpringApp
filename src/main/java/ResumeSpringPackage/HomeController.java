@@ -50,7 +50,7 @@ public class HomeController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String signupPost(@ModelAttribute Person person, User user){
         emailSession = person.getEmail();
-        user.setId(person.getId());
+        user.setEnabled(true);
     user.setUsername(person.getEmail());
     user.setPassword(person.getPassword());
     userRepository.save(user);
@@ -128,9 +128,10 @@ public class HomeController {
     }
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String SearchPostName(@ModelAttribute Person person, Model model){
+        System.out.println(person.getFirstName());
         String nameSession = person.getFirstName();
-        Iterable<Person> resultPerson = personRepository.findByFirstName(nameSession);
-        model.addAttribute("values", resultPerson);
+        Iterable<Person> newVal = personRepository.findByFirstName(nameSession);
+        model.addAttribute("searchValue", newVal);
         return "display";
     }
 }
