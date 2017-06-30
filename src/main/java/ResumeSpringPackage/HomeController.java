@@ -78,7 +78,6 @@ public class HomeController {
         model.addAttribute("education", new Education());
         return "education";
     }
-
     /*Experience controller*/
     @RequestMapping(value = "/experience", method = RequestMethod.GET)
     public String ExperienceGet(Model model){
@@ -175,16 +174,29 @@ public class HomeController {
         model.addAttribute("newValue", newVal);
         return "displaySearch";
     }
-    /*@RequestMapping(value = "/byCompany", method = RequestMethod.GET)
+    @RequestMapping(value = "/searchrole", method = RequestMethod.GET)
+    public String Searchrole(Model model){
+        model.addAttribute(new Person());
+        return "redirect:/searchrole";
+    }
+    @RequestMapping(value = "/searchrole", method = RequestMethod.POST)
+    public String Searchrolepost(@ModelAttribute Person person, Model model){
+        String companySession = person.getRole();
+        Iterable<Person> newVal = personRepository.findByRole(companySession);
+        model.addAttribute("searchrole", newVal);
+        return "displaySearch";
+    }
+
+  /*  @RequestMapping(value = "/company", method = RequestMethod.GET)
     public String SearchCompany(Model model){
         model.addAttribute(new Experience());
-        return "redirect:/byCompany";
-    }*/
-    @RequestMapping(value = "/byCompany", method = RequestMethod.GET)
+        return "redirect:/company";
+    }
+    @RequestMapping(value = "/company", method = RequestMethod.POST)
     public String SearchCompanypost(@ModelAttribute Experience experience, Model model){
         String companySession = experience.getCompany();
         Iterable<Experience> newVal = experienceRepository.findByCompany(companySession);
         model.addAttribute("searchCompany", newVal);
         return "displaySearch";
-    }
+    }*/
 }

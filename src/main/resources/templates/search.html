@@ -17,6 +17,11 @@
             <input type="text" th:field="*{email}" name="email" placeholder="By Email"/>
             <button type="submit">Search</button>
         </form>
+
+        <form th:action="@{/searchrole}" th:object="${person}"  method="post" >
+            <input type="text" th:field="*{role}" name="role" placeholder="User or Recruiter"/>
+            <button type="submit">Search</button>
+        </form>
    </div>
 </div>
 
