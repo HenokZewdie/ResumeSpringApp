@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface PersonRepository extends CrudRepository<Person, Integer> {
     List<Person> findByEmail(String email);
+    List<Person> findByFirstName(String fName);
 }

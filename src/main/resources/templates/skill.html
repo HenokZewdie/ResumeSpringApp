@@ -15,7 +15,7 @@
             <form th:action="@{/skill}" th:object="${skill}" method="post">
                 <div class="col-xs-4">
                     <label for="skill">Skill Name</label>
-                    <input type="text" name="skill" th:field="*{skill}" class="form-control" id="skill" placeholder="skill Name" />
+                    <input type="text" name="skill" th:field="*{skills}" class="form-control" id="skill" placeholder="skill Name" />
                 </div>
                 <div class="col-xs-4">
                     <label for="rating">Rating</label>
@@ -25,7 +25,7 @@
                 <button type="submit" class="btn btn-default">Add More Skills</button>
             </form>
             <div class="col-xs-4">
-                <form action="/display">
+                <form action="/displayAll">
                     <button type="submit" class="btn btn-default">Am Done</button>
                 </form>
             </div>

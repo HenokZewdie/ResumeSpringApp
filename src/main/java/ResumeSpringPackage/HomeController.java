@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
 import java.util.Date;
+import java.util.List;
 
 
 @Controller
@@ -45,15 +46,7 @@ public class HomeController {
     personRepository.save(person);
     return "redirect:/display";
 }
-    /*Display Controller*/
-   @RequestMapping(value = "display", method = RequestMethod.GET)
-    public String toSend(@ModelAttribute Person person, Model model){
-
-        Iterable<Person> values = personRepository.findByEmail(emailSession);
-        model.addAttribute("values", values);
-        return "display";
-    }
-    /*Education controller*/
+       /*Education controller*/
     @RequestMapping(value = "/education", method = RequestMethod.GET)
     public String EducationGet(Model model){
         model.addAttribute("education", new Education());
@@ -90,7 +83,42 @@ public class HomeController {
     public String SkillPost(@ModelAttribute Skill skill, Model model){
         skill.setEmail(emailSession);
         skillRepository.save(skill);
-        model.addAttribute("skill", new Experience());
+        model.addAttribute("skill", new Skill());
         return "skill";
+    }
+    /*Display Controller*/
+    @RequestMapping(value = "display", method = RequestMethod.GET)
+    public String toSend(@ModelAttribute Person person, Model model){
+
+        Iterable<Person> values = personRepository.findByEmail(emailSession);
+        model.addAttribute("values", values);
+        return "display";
+    }
+    /*Display Controller*/
+    @RequestMapping(value = "displayAll", method = RequestMethod.GET)
+    public String DisplayAll( Model model){
+
+        Iterable<Person> values = personRepository.findByEmail(emailSession);
+        Iterable<Education> Educvalues = educationRepository.findByEmail(emailSession);
+        Iterable<Experience> Expvalues = experienceRepository.findByEmail(emailSession);
+        Iterable<Skill> Skillvalues = skillRepository.findByEmail(emailSession);
+        model.addAttribute("values", values);
+        model.addAttribute("Educvalues", Educvalues);
+        model.addAttribute("Expvalues", Expvalues);
+        model.addAttribute("Skillvalues", Skillvalues);
+        return "displayAll";
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String SearchByName(Model model){
+        model.addAttribute(new Person());
+        return "search";
+    }
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public String SearchPostName(@ModelAttribute Person person, Model model){
+        String nameSession = person.getFirstName();
+        Iterable<Person> resultPerson = personRepository.findByFirstName(nameSession);
+        model.addAttribute("values", resultPerson);
+        return "display";
     }
 }
