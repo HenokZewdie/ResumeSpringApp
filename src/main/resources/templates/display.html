@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="base :: Mena">
     <meta charset="UTF-8" />
     <title>Title</title>
@@ -7,7 +7,7 @@
 <body>
 <div class="container">
     <div class="jumbotron">
-        <div class="container">
+
     <nav class="navbar navbar-default" th:replace="base::navi"> </nav>
 
     <table class="table table-hover">
@@ -19,15 +19,15 @@
             <th>Registered Date</th>
 
         </tr>
-        <div th:each="test : ${values}">
 
+        <div th:each="test : ${newVal}">
             <tr>
-
                 <td th:text = "${test.firstName}"></td>
                 <td th:text = "${test.lastName}"></td>
                 <td th:text = "${test.email}"></td>
                 <td th:text = "${#dates.format(test.date, 'MMM-dd-yyyy')}"></td>
 
+                <!--<td th:text = "${#dates.format(mylink.date, 'MMM-dd-yyyy')}"></td>  #dates.format(sprint.releaseDate, 'dd-MMM-yyyy')-->
             </tr>
         </div>
 
@@ -43,6 +43,6 @@
             </form>
             </div>
         </div>
-    </div></div>
+    </div>
 </body>
 </html>

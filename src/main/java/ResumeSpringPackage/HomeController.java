@@ -49,14 +49,13 @@ public class HomeController {
 }
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String signupPost(@ModelAttribute Person person, User user){
-
-    String pass = person.getPassword();
-    person.setDate(new Date());
-    personRepository.save(person);
-    user.setId(person.getId());
+        emailSession = person.getEmail();
+        user.setId(person.getId());
     user.setUsername(person.getEmail());
     user.setPassword(person.getPassword());
     userRepository.save(user);
+    person.setDate(new Date());
+    personRepository.save(person);
      return "redirect:/display";
 }
        /*Education controller*/
@@ -101,10 +100,10 @@ public class HomeController {
     }
     /*Display Controller*/
     @RequestMapping(value = "display", method = RequestMethod.GET)
-    public String toSend(@ModelAttribute Person person, Model model){
+    public String toSend( Person person, Model model){
 
         Iterable<Person> values = personRepository.findByEmail(emailSession);
-        model.addAttribute("values", values);
+        model.addAttribute("newVal", values);
         return "display";
     }
     /*Display Controller*/
