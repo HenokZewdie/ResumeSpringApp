@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head th:replace="base::Mena">
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron">
+<nav class="navbar navbar-default" th:replace="base::navi"></nav>
+<form th:action="@{/search}" th:object="${person}" method="post" >
+    <div><label> Search by Name : <input type="text" th:field="*{firstName}" name="username" placeholder="First Name"/> </label></div>
+
+    <div><input type="submit" value="Search"/></div>
+</form>
+    </div>
+</div>
+
+</body>
+</html>
