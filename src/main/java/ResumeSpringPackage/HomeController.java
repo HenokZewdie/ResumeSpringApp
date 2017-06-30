@@ -103,12 +103,29 @@ public class HomeController {
     public String toSend( Person person, Model model){
 
         Iterable<Person> values = personRepository.findByEmail(emailSession);
-        model.addAttribute("newVal", values);
+        model.addAttribute("newValue", values);
         return "display";
     }
     /*Display Controller*/
+
+    @RequestMapping(value = "searchAll", method = RequestMethod.GET)
+    public String SearchAll( Model model, Person person){
+
+        String emailSession1 = person.getEmail();
+        Iterable<Person> values = personRepository.findByEmail(emailSession1);
+        Iterable<Education> Educvalues = educationRepository.findByEmail(emailSession1);
+        Iterable<Experience> Expvalues = experienceRepository.findByEmail(emailSession1);
+        Iterable<Skill> Skillvalues = skillRepository.findByEmail(emailSession1);
+        model.addAttribute("values", values);
+        model.addAttribute("Educvalues", Educvalues);
+        model.addAttribute("Expvalues", Expvalues);
+        model.addAttribute("Skillvalues", Skillvalues);
+        return "displayAll";
+    }
+
     @RequestMapping(value = "displayAll", method = RequestMethod.GET)
-    public String DisplayAll( Model model){
+    public String DisplayAll( Model model, Person person){
+
 
         Iterable<Person> values = personRepository.findByEmail(emailSession);
         Iterable<Education> Educvalues = educationRepository.findByEmail(emailSession);
@@ -121,17 +138,28 @@ public class HomeController {
         return "displayAll";
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/search", method = RequestMethod.GET)// , params={"company"} to use a text box for two buttons named "name and comapny"
     public String SearchByName(Model model){
         model.addAttribute(new Person());
         return "search";
     }
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String SearchPostName(@ModelAttribute Person person, Model model){
-        System.out.println(person.getFirstName());
         String nameSession = person.getFirstName();
         Iterable<Person> newVal = personRepository.findByFirstName(nameSession);
-        model.addAttribute("searchValue", newVal);
-        return "display";
+        model.addAttribute("newValue", newVal);
+        return "displaySearch";
     }
+    /*@RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String SearchCompany(Model model){
+        model.addAttribute(new Experience());
+        return "search";
+    }
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public String SearchCompanypost(@ModelAttribute Experience experience, Model model){
+        String companySession = experience.getCompany();
+        Iterable<Experience> newVal = experienceRepository.findByCompany(companySession);
+        model.addAttribute("searchCompany", newVal);
+        return "displaySearch";
+    }*/
 }

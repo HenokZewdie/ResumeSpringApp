@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface ExperienceRepository extends CrudRepository<Experience, Integer>{
     List<Experience> findByEmail(String email);
+    List<Experience> findByCompany(String company);
 }

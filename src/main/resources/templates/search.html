@@ -8,11 +8,16 @@
 <div class="container">
     <div class="jumbotron">
 <nav class="navbar navbar-default" th:replace="base::navi"></nav>
-<form th:action="@{/search}" th:object="${person}" method="post" >
-    <div><label> Search by Name : <input type="text" th:field="*{firstName}" name="username" placeholder="First Name"/> </label></div>
-
-    <div><input type="submit" value="Search"/></div>
+<form th:action="@{/search}" th:object="${person}"  method="post" >
+        <input type="text" th:field="*{firstName}" name="firstName" placeholder="By Name"/>
+        <button type="submit">Search</button>
 </form>
+
+        <form th:action="@{/searchAll}" th:object="${person}"  method="get" >
+            <input type="text" th:field="*{email}" name="firstName" placeholder="By Email"/>
+            <button type="submit">Search</button>
+        </form>
+
     </div>
 </div>
 
