@@ -1,6 +1,7 @@
 package ResumeSpringPackage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +26,8 @@ public class HomeController {
     private ExperienceRepository experienceRepository;
     @Autowired
     private SkillRepository skillRepository;
+    @Autowired
+    private UserRepository userRepository;
 
 
     /*Home Controller*/
@@ -32,6 +36,10 @@ public class HomeController {
         return "home";
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(){
+        return "login";
+    }
     /*Registration controller*/
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -40,11 +48,16 @@ public class HomeController {
         return "register";
 }
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String signupPost(@ModelAttribute Person person){
-    emailSession = person.getEmail();
+    public String signupPost(@ModelAttribute Person person, User user){
+
+    String pass = person.getPassword();
     person.setDate(new Date());
     personRepository.save(person);
-    return "redirect:/display";
+    user.setId(person.getId());
+    user.setUsername(person.getEmail());
+    user.setPassword(person.getPassword());
+    userRepository.save(user);
+     return "redirect:/display";
 }
        /*Education controller*/
     @RequestMapping(value = "/education", method = RequestMethod.GET)
