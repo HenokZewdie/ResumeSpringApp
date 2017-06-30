@@ -40,6 +40,13 @@ public class HomeController {
     public String login(){
         return "login";
     }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String loginName(Principal principal, Person person, Model model){
+        person.setEmail(principal.getName());
+        System.out.println(person.getEmail());
+        return "login";
+    }
     /*Registration controller*/
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -108,9 +115,10 @@ public class HomeController {
     }
     /*Display Controller*/
 
-    @RequestMapping(value = "searchAll", method = RequestMethod.GET)
-    public String SearchAll( Model model, Person person){
+    @RequestMapping(value = "loginSuccess", method = RequestMethod.GET)
+    public String loginSuccess( Model model, Person person, Principal principal){
 
+        person.setEmail(principal.getName());
         String emailSession1 = person.getEmail();
         Iterable<Person> values = personRepository.findByEmail(emailSession1);
         Iterable<Education> Educvalues = educationRepository.findByEmail(emailSession1);
@@ -123,6 +131,22 @@ public class HomeController {
         return "displayAll";
     }
 
+    @RequestMapping(value = "searchAll", method = RequestMethod.GET)
+    public String SearchAll( Model model, Person person, Principal principal){
+
+
+        String emailSession1 = person.getEmail();
+        Iterable<Person> values = personRepository.findByEmail(emailSession1);
+        Iterable<Education> Educvalues = educationRepository.findByEmail(emailSession1);
+        Iterable<Experience> Expvalues = experienceRepository.findByEmail(emailSession1);
+        Iterable<Skill> Skillvalues = skillRepository.findByEmail(emailSession1);
+        model.addAttribute("values", values);
+        model.addAttribute("Educvalues", Educvalues);
+        model.addAttribute("Expvalues", Expvalues);
+        model.addAttribute("Skillvalues", Skillvalues);
+        return "displayAll";
+    }
+    /*Search by email*/
     @RequestMapping(value = "displayAll", method = RequestMethod.GET)
     public String DisplayAll( Model model, Person person){
 
@@ -138,6 +162,7 @@ public class HomeController {
         return "displayAll";
     }
 
+    /*Search by Name*/
     @RequestMapping(value = "/search", method = RequestMethod.GET)// , params={"company"} to use a text box for two buttons named "name and comapny"
     public String SearchByName(Model model){
         model.addAttribute(new Person());
@@ -150,16 +175,16 @@ public class HomeController {
         model.addAttribute("newValue", newVal);
         return "displaySearch";
     }
-    /*@RequestMapping(value = "/search", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/byCompany", method = RequestMethod.GET)
     public String SearchCompany(Model model){
         model.addAttribute(new Experience());
-        return "search";
-    }
-    @RequestMapping(value = "/search", method = RequestMethod.POST)
+        return "redirect:/byCompany";
+    }*/
+    @RequestMapping(value = "/byCompany", method = RequestMethod.GET)
     public String SearchCompanypost(@ModelAttribute Experience experience, Model model){
         String companySession = experience.getCompany();
         Iterable<Experience> newVal = experienceRepository.findByCompany(companySession);
         model.addAttribute("searchCompany", newVal);
         return "displaySearch";
-    }*/
+    }
 }

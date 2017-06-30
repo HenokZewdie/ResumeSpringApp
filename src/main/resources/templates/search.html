@@ -14,11 +14,10 @@
 </form>
 
         <form th:action="@{/searchAll}" th:object="${person}"  method="get" >
-            <input type="text" th:field="*{email}" name="firstName" placeholder="By Email"/>
+            <input type="text" th:field="*{email}" name="email" placeholder="By Email"/>
             <button type="submit">Search</button>
         </form>
-
-    </div>
+   </div>
 </div>
 
 </body>
